@@ -9,7 +9,7 @@ struct PhoneBookItem{
     std::string m_phone;
 
     PhoneBookItem* m_next;
-    PhoneBookItem(){};
+    PhoneBookItem(){}
     PhoneBookItem(const std::string& name, int age, const std::string& phone);
 };
 

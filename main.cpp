@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-
+//	int *p123 = new int;
     PhoneBookItem test("Alpha",99,"99");
 
 
@@ -40,6 +40,10 @@ int main()
     cout << whiteBook << endl;
 
 
+    cout << "Get All People With Maximum Age: ";
+    cout << yellowPages.GetAllPeopleWithMaxAge() << endl;
+
+
     //Pause
     cin.get();
 
@@ -51,8 +55,9 @@ int main()
         cout << "[1] Add a person\n";
         cout << "[2] Lookup a person\n";
         cout << "[3] Delete a person\n";
-        cout << "[4] Get # of persons in phonebook\n";
-        cout << "[5] Exit\n";
+        cout << "[4] Print out Phonebook\n";
+        cout << "[5] Get # of persons in phonebook\n";
+        cout << "[6] Exit\n";
         cin >> choice;
         cin.ignore(50,'\n');
 
@@ -68,9 +73,12 @@ int main()
             menu.Delete();
             break;
         case 4:
+            menu.PrintOut();
+            break;
+        case 5:
             menu.GetLength();
             break;
-        case 5:{
+        case 6:{
             done = true;
             break;
         }
@@ -79,6 +87,7 @@ int main()
         }
 
     }
+
 
     return 0;
 }

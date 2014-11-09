@@ -1,16 +1,15 @@
 #include "PhoneBook.h"
 #include "PhoneBookItem.h"
 #include "algorithm"
-#include <strings.h>
+#include <string.h>
 
 PhoneBook::PhoneBook(){
+    length = 0;
     m_head = new PhoneBookItem("",-99,"");
     m_num = 0;
 }
 
 PhoneBook::PhoneBook(const PhoneBook& pb){
-    m_head = new PhoneBookItem("",-99,"");
-    m_num = 0;
     Copy(pb);
 }
 
@@ -57,6 +56,9 @@ void PhoneBook::Copy(const PhoneBook& pb){
     //Precondition: Has valid Phonebook parameter.
     //Postcondition: Creates a new Phonebook on the heap.
     //Fills it with contents from calling Phonebook.
+
+    m_head = new PhoneBookItem("",-99,"");
+    m_num = 0;
 
     PhoneBookItem *temp, *newNode, *newLoc;
     temp = pb.m_head->m_next;
@@ -132,25 +134,25 @@ bool PhoneBook::Delete(const string &name){
     PhoneBookItem* current;
     PhoneBookItem* temp;
 
-    current = m_head->m_next;
+    current = m_head;   //->m_next;
 
-    if(strcasecmp(current->m_name.c_str(),name.c_str()) == 0){ /*current->m_name == name*/
-        temp = current;
-        m_head->m_next = current->m_next;
+    //if(current->m_name == name /*strcasecmp(current->m_name.c_str(),name.c_str()) == 0*/){ /*current->m_name == name*/
+    //    temp = current;
+    //    m_head->m_next = current->m_next;
 
-        delete temp;
-        length--;
-        return true;
-    }
-    else
+    //    delete temp;
+    //    length--;
+    //    return true;
+    //}
+    //else
     {
 
-        while(strcasecmp(current->m_next->m_name.c_str(),name.c_str()) != 0 ){ /*current->m_next->m_name != name*/
+        while(current->m_next->m_name != name /*strcasecmp(current->m_next->m_name.c_str(),name.c_str()) != 0*/ ){ /*current->m_next->m_name != name*/
             previous = current;
             current = current->m_next;
             if(current->m_next == nullptr)
                 return false;
-        }
+    }
 
         temp = current->m_next;
         current->m_next = current->m_next->m_next;
@@ -177,7 +179,7 @@ bool PhoneBook::Lookup(const string &name, int &age, string &phone) const{
     current = m_head->m_next;
 
     //Use strcasecmp (C lib.) to ignore case.
-    while(/*current->m_name != name*/ strcasecmp(current->m_name.c_str(),name.c_str()) != 0){
+    while(current->m_name != name /*strcasecmp(current->m_name.c_str(),name.c_str()) != 0*/){
         if(current->m_next != nullptr) //we've reached the end!
             current = current->m_next;
         else
@@ -283,19 +285,43 @@ int PhoneBook::Size() const {
 //}
 
 
-//PhoneBook PhoneBook::GetAllPeopleWithMaxAge(){
+PhoneBook PhoneBook::GetAllPeopleWithMaxAge(){
 
-//    int maxAge = this->GetMaxAge();
-//    PhoneBook newPb;
-//    PhoneBookItem *current;
-//    current = m_head->m_next;
+    //int maxAge = this->GetMaxAge();
+    int maxAge = 0;
+    PhoneBook *newPb = new PhoneBook;
+    PhoneBookItem *current;
+    current = m_head->m_next;
 
-//    while(current != nullptr){
-//        if(current->m_age == maxAge){
-//            newPb.Insert(current->m_name,current->m_age,current->m_phone);
-//        }
-//        current = current->m_next;
-//    }
+    std::vector<PhoneBookItem> cache;
 
-//    return newPb;
-//}
+    while(current != nullptr){
+        if(current->m_age > maxAge){
+            maxAge = current->m_age;
+
+            delete newPb;
+            newPb = new PhoneBook;
+            newPb->Insert(current->m_name,current->m_age,current->m_phone);
+
+//            cache.clear();
+//            cache.push_back(*current);
+
+        }
+        else if(current->m_age == maxAge){
+            //cache.push_back(*current);
+            newPb->Insert(current->m_name,current->m_age,current->m_phone);
+        }
+
+        current = current->m_next;
+    }
+
+//    for(auto i : cache)
+//        cout << i << endl;
+
+
+    cout << "returning" << endl;
+
+    //cout << *newPb << endl;
+
+    return *newPb;
+}

@@ -12,6 +12,7 @@ public:
     void LookUp();
     void Delete();
     void GetLength();
+    void PrintOut();
 
 
     //Extra--

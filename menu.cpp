@@ -67,6 +67,13 @@ void Menu::Delete(){
 
 }
 
+void Menu::PrintOut(){
+
+    cout << "\n\n" << *pb;
+    cout << "\n\n";
+
+}
+
 void Menu::GetLength(){
     //Returns size of Phonebook.
 
