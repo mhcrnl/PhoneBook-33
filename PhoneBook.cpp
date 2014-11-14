@@ -3,6 +3,10 @@
 #include "algorithm"
 #include <string.h>
 
+//#define _AFXDLL
+//#include <afxwin.h>
+//#define new DEBUG_NEW
+
 PhoneBook::PhoneBook(){
     length = 0;
     m_head = new PhoneBookItem("",-99,"");
@@ -110,18 +114,10 @@ bool PhoneBook::Insert(const string &name, int age, const string &phone){
         //Name is less than current, place after
     }
 
-    temp->m_name = name;
-
-    if(previous == nullptr){
-        temp->m_next = current;
-    }
-    else{
         temp->m_next = current;
         previous->m_next = temp;
-    }
-
-    length++;
-
+   
+		length++;
 
     return true;
 }
@@ -130,41 +126,27 @@ bool PhoneBook::Delete(const string &name){
     //Precondition: User has specified name.
     //Postcondition: Person entry is deleted from phonebook.
 
-    PhoneBookItem* previous;
-    PhoneBookItem* current;
-    PhoneBookItem* temp;
+    PhoneBookItem* previous = m_head;
+    PhoneBookItem* current = m_head->m_next;
 
-    current = m_head;   //->m_next;
+	while(current != nullptr){
+		
+		if(current->m_name == name){
+			previous->m_next = current->m_next;  //Error occurred here. previous->m_next
+			delete current;
+			length--;
+			return true;
+		}
+		else if(current->m_name.compare(name) > 0)
+			return false;
 
-    //if(current->m_name == name /*strcasecmp(current->m_name.c_str(),name.c_str()) == 0*/){ /*current->m_name == name*/
-    //    temp = current;
-    //    m_head->m_next = current->m_next;
-
-    //    delete temp;
-    //    length--;
-    //    return true;
-    //}
-    //else
-    {
-
-        while(current->m_next->m_name != name /*strcasecmp(current->m_next->m_name.c_str(),name.c_str()) != 0*/ ){ /*current->m_next->m_name != name*/
-            previous = current;
-            current = current->m_next;
-            if(current->m_next == nullptr)
-                return false;
+       previous = current;
+	   current = current->m_next;
     }
 
-        temp = current->m_next;
-        current->m_next = current->m_next->m_next;
-
-        delete temp;
-        length--;
-        return true;
-
-    }
+	return false;
 
 
-    return false;
 }
 
 bool PhoneBook::Lookup(const string &name, int &age, string &phone) const{
@@ -179,11 +161,14 @@ bool PhoneBook::Lookup(const string &name, int &age, string &phone) const{
     current = m_head->m_next;
 
     //Use strcasecmp (C lib.) to ignore case.
-    while(current->m_name != name /*strcasecmp(current->m_name.c_str(),name.c_str()) != 0*/){
+    //stricmp for windows
+    while(current->m_name != name /*_stricmp(current->m_name.c_str(),name.c_str()) != 0*/){
         if(current->m_next != nullptr) //we've reached the end!
             current = current->m_next;
-        else
+        else if(/*_stricmp(current->m_name.c_str(),name.c_str()) > 0*/ current->m_name.compare(name) > 0) //Stop sort
             return false;
+		else
+			return false;
     }
 
     age = current->m_age;
@@ -233,7 +218,7 @@ void PhoneBook::Clear(){
         head->m_next = current;     //set head next to point to current.
         delete temp;                //Now delete temp. Rinse and repeat.
     }
-    delete m_head;                  //We DUUNN. Delete m_head.
+    delete m_head;                  
 }
 
 
@@ -250,78 +235,76 @@ int PhoneBook::Size() const {
 //int PhoneBook::GetMaxAge(){
 //    //Loops through each linked list element.
 //    //If age is bigger than maxAge, set maxAge to age.
-
+//
 //    int maxAge = 0;
 //    PhoneBookItem* current;
 //    current = m_head->m_next;
-
+//
 //    while(current != nullptr){
 //        if(current->m_age > maxAge){
 //            maxAge = current->m_age;
 //        }
-
+//
 //        current = current->m_next;
-
+//
 //    }
-
+//
 //    return maxAge;
-
+//
 //}
 
 //PhoneBook PhoneBook::GetPeopleWithGivenAge(int age){
-
+//
 //    PhoneBook newPb;
 //    PhoneBookItem *current;
 //    current = m_head->m_next;
-
+//
 //    while(current != nullptr){
 //        if(current->m_age == age){
 //            newPb.Insert(current->m_name,current->m_age,current->m_phone);
 //        }
 //        current = current->m_next;
 //    }
-
+//
 //    return newPb;
 //}
 
 
-PhoneBook PhoneBook::GetAllPeopleWithMaxAge(){
-
-    //int maxAge = this->GetMaxAge();
-    int maxAge = 0;
-    PhoneBook *newPb = new PhoneBook;
-    PhoneBookItem *current;
-    current = m_head->m_next;
-
-    std::vector<PhoneBookItem> cache;
-
-    while(current != nullptr){
-        if(current->m_age > maxAge){
-            maxAge = current->m_age;
-
-            delete newPb;
-            newPb = new PhoneBook;
-            newPb->Insert(current->m_name,current->m_age,current->m_phone);
-
-//            cache.clear();
-//            cache.push_back(*current);
-
-        }
-        else if(current->m_age == maxAge){
-            //cache.push_back(*current);
-            newPb->Insert(current->m_name,current->m_age,current->m_phone);
-        }
-
-        current = current->m_next;
-    }
-
-//    for(auto i : cache)
-//        cout << i << endl;
-
-
-    cout << "returning" << endl;
-
-    //cout << *newPb << endl;
-
-    return *newPb;
-}
+//PhoneBook PhoneBook::GetAllPeopleWithMaxAge(){
+//
+//    //int maxAge = this->GetMaxAge();
+//    int maxAge = 0;
+//    PhoneBook *newPb = new PhoneBook;
+//    PhoneBookItem *current = m_head->m_next;
+//
+////    std::vector<PhoneBookItem> cache;
+//
+//    while(current != nullptr){
+//        if(current->m_age > maxAge){
+//            maxAge = current->m_age;
+//
+//            delete newPb;
+//            newPb = new PhoneBook;
+//            newPb->Insert(current->m_name,current->m_age,current->m_phone);
+//
+////            cache.clear();
+////            cache.push_back(*current);
+//
+//        }
+//        else if(current->m_age == maxAge){
+//            //cache.push_back(*current);
+//            newPb->Insert(current->m_name,current->m_age,current->m_phone);
+//        }
+//
+//        current = current->m_next;
+//    }
+//
+////    for(auto i : cache)
+////        cout << i << endl;
+//
+//
+//	PhoneBook toReturn(*newPb);
+//	delete newPb;               //To prevent memory leak with new phonebook on heap.
+//
+//    return toReturn;
+//}

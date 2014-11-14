@@ -39,7 +39,7 @@ private:
     void Copy(const PhoneBook&);
     PhoneBookItem* m_head;
     int m_num;
-    int length = 0;
+    int length;
 };
 
 

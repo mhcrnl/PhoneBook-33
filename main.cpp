@@ -9,10 +9,7 @@ using namespace std;
 
 int main()
 {
-//	int *p123 = new int;
-    PhoneBookItem test("Alpha",99,"99");
-
-
+	int *p123 = new int;
 
     PhoneBook yellowPages;
 
@@ -20,7 +17,7 @@ int main()
     yellowPages.Insert("Mr. Mead",10,"911");
     yellowPages.Insert("Alpha",10,"112");
     yellowPages.Insert("Saxton Hale",40,"1-888-222-2222");
-    yellowPages.Insert("Gabe Newell",40,"1-444-444-4444");
+    yellowPages.Insert("Gabe Newell",100,"1-444-444-4444");
     yellowPages.Insert("Pyro",29,"1-234-567-8901");
 
     cout << "Original list: " << endl;
@@ -40,8 +37,11 @@ int main()
     cout << whiteBook << endl;
 
 
-    cout << "Get All People With Maximum Age: ";
-    cout << yellowPages.GetAllPeopleWithMaxAge() << endl;
+	//cout << "Get All People With Certain Age: " << endl;
+	//cout << yellowPages.GetPeopleWithGivenAge(29) << endl;
+
+    //cout << "Get All People With Maximum Age: " << endl;
+    //cout << yellowPages.GetAllPeopleWithMaxAge() << endl;
 
 
     //Pause
@@ -92,15 +92,3 @@ int main()
     return 0;
 }
 
-
-
-
-//EXTRA
-
-
-//    cout << "Max Age: " << yellowPages.GetMaxAge() << endl;
-
-//    cout << "Getting all with max Age" << endl;
-//    PhoneBook lol = yellowPages.GetAllPeopleWithMaxAge();
-
-//    cout << lol << endl;
