@@ -232,79 +232,79 @@ int PhoneBook::Size() const {
 
 //EXTRA
 
-//int PhoneBook::GetMaxAge(){
-//    //Loops through each linked list element.
-//    //If age is bigger than maxAge, set maxAge to age.
-//
-//    int maxAge = 0;
-//    PhoneBookItem* current;
-//    current = m_head->m_next;
-//
-//    while(current != nullptr){
-//        if(current->m_age > maxAge){
-//            maxAge = current->m_age;
-//        }
-//
-//        current = current->m_next;
-//
-//    }
-//
-//    return maxAge;
-//
-//}
+int PhoneBook::GetMaxAge(){
+    //Loops through each linked list element.
+    //If age is bigger than maxAge, set maxAge to age.
 
-//PhoneBook PhoneBook::GetPeopleWithGivenAge(int age){
-//
-//    PhoneBook newPb;
-//    PhoneBookItem *current;
-//    current = m_head->m_next;
-//
-//    while(current != nullptr){
-//        if(current->m_age == age){
-//            newPb.Insert(current->m_name,current->m_age,current->m_phone);
-//        }
-//        current = current->m_next;
-//    }
-//
-//    return newPb;
-//}
+    int maxAge = 0;
+    PhoneBookItem* current;
+    current = m_head->m_next;
+
+    while(current != nullptr){
+        if(current->m_age > maxAge){
+            maxAge = current->m_age;
+        }
+
+        current = current->m_next;
+
+    }
+
+    return maxAge;
+
+}
+
+PhoneBook PhoneBook::GetPeopleWithGivenAge(int age){
+
+    PhoneBook newPb;
+    PhoneBookItem *current;
+    current = m_head->m_next;
+
+    while(current != nullptr){
+        if(current->m_age == age){
+            newPb.Insert(current->m_name,current->m_age,current->m_phone);
+        }
+        current = current->m_next;
+    }
+
+    return newPb;
+}
 
 
-//PhoneBook PhoneBook::GetAllPeopleWithMaxAge(){
-//
-//    //int maxAge = this->GetMaxAge();
-//    int maxAge = 0;
-//    PhoneBook *newPb = new PhoneBook;
-//    PhoneBookItem *current = m_head->m_next;
-//
-////    std::vector<PhoneBookItem> cache;
-//
-//    while(current != nullptr){
-//        if(current->m_age > maxAge){
-//            maxAge = current->m_age;
-//
-//            delete newPb;
-//            newPb = new PhoneBook;
-//            newPb->Insert(current->m_name,current->m_age,current->m_phone);
-//
-////            cache.clear();
-////            cache.push_back(*current);
-//
-//        }
-//        else if(current->m_age == maxAge){
-//            //cache.push_back(*current);
-//            newPb->Insert(current->m_name,current->m_age,current->m_phone);
-//        }
-//
-//        current = current->m_next;
-//    }
-//
-////    for(auto i : cache)
-////        cout << i << endl;
-//
-//
-//	PhoneBook toReturn(*newPb);
-//	delete newPb;               //To prevent memory leak with new phonebook on heap.
-//
-//    return toReturn;
-//}
+PhoneBook PhoneBook::GetAllPeopleWithMaxAge(){
+
+    //int maxAge = this->GetMaxAge();
+    int maxAge = 0;
+    PhoneBook *newPb = new PhoneBook;
+    PhoneBookItem *current = m_head->m_next;
+
+//    std::vector<PhoneBookItem> cache;
+
+    while(current != nullptr){
+        if(current->m_age > maxAge){
+            maxAge = current->m_age;
+
+            delete newPb;
+            newPb = new PhoneBook;
+            newPb->Insert(current->m_name,current->m_age,current->m_phone);
+
+//            cache.clear();
+//            cache.push_back(*current);
+
+        }
+        else if(current->m_age == maxAge){
+            //cache.push_back(*current);
+            newPb->Insert(current->m_name,current->m_age,current->m_phone);
+        }
+
+        current = current->m_next;
+    }
+
+//    for(auto i : cache)
+//        cout << i << endl;
+
+
+    PhoneBook toReturn(*newPb);
+    delete newPb;               //To prevent memory leak with new phonebook on heap.
+
+    return toReturn;
+}

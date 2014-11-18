@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-	int *p123 = new int;
+    //int *p123 = new int;
 
     PhoneBook yellowPages;
 
@@ -37,11 +37,14 @@ int main()
     cout << whiteBook << endl;
 
 
-	//cout << "Get All People With Certain Age: " << endl;
-	//cout << yellowPages.GetPeopleWithGivenAge(29) << endl;
+    cout << "Get Max Age: ";
+    cout << yellowPages.GetMaxAge() << endl;
 
-    //cout << "Get All People With Maximum Age: " << endl;
-    //cout << yellowPages.GetAllPeopleWithMaxAge() << endl;
+    cout << "Get All People With Certain Age: " << endl;
+    cout << yellowPages.GetPeopleWithGivenAge(29);
+
+    cout << "Get All People With Maximum Age: " << endl;
+    cout << yellowPages.GetAllPeopleWithMaxAge() << endl;
 
 
     //Pause
